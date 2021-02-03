@@ -26,26 +26,25 @@ jobs:
         pip3 install conan
 
     - name: Setup Conan
+      # Set up conan with c++11 ABI support
       shell: bash
+      # The echo "KEY=VAR" >> $GITHUB_ENV can setup global environment variable
       run: |
         export PATH=$HOME/.local/bin:$PATH
         echo "PATH=$(echo $PATH)" >> $GITHUB_ENV
         conan profile new default --detect
         conan profile update settings.compiler.libcxx=libstdc++11 default
-        conan --version
 
     - name: Install Conan packages
+      # make build directory and run conan install
       shell: bash
       run: |
         cd ${{github.workspace}}
         mkdir build
         cd build
         conan install ..
-        conan info ..
 
     - name: Configure CMake
-      # Use a bash shell so we can use the same syntax for environment variable
-      # access regardless of the host operating system
       shell: bash
       working-directory: ${{github.workspace}}/build
       # Note the current convention is to use the -S and -B options here to specify source 
