@@ -35,6 +35,7 @@ jobs:
     - name: Install Conan packages
       shell: bash
       working-directory: ${{github.workspace}}/build
+      run: |
         conan install ..
         conan info ..
 
