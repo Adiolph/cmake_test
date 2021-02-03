@@ -19,7 +19,7 @@ jobs:
 
     - name: Download Conan
       shell: bash
-      run: 
+      run: |
         pip3 install wheel setuptools
         pip3 install conan
 
