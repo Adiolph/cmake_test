@@ -17,7 +17,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: test conan environment
+    - name: Download Conan
+      shell: bash
+      run: 
+        pip3 install conan
+
+    - name: Test conan environment
       shell: bash
       run: conan --version
 
