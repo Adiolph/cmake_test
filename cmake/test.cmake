@@ -14,9 +14,9 @@
 # If 1) doesn't work, use the SOURCES keyword to explicitly
 # specify the sources.
 #
-# Example: ADD_TEST(testSomething
+# Example: ADD_TEST_UNIT(testSomething
 #              SOURCES source1.cc source2.cc someheader.h)
-function(FUNC_ADD_TEST)
+function(ADD_TEST_UNIT)
   cmake_parse_arguments(PARSE_ARGV 1 TESTS "" "SANITIZE" "SOURCES")
   set(name ${ARGV0})
 
