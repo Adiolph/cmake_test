@@ -24,12 +24,19 @@ jobs:
         pip3 install wheel setuptools
         pip3 install conan
 
-    - name: Test conan environment
+    - name: Setup Conan
       shell: bash
       run: |
         export PATH=$HOME/.local/bin:$PATH
+        conan profile new default --detect
+        conan profile update settings.compiler.libcxx=libstdc++11 default
         conan --version
 
+    - name: Install Conan packages
+      shell: bash
+      working-directory: ${{github.workspace}}/build
+        conan install ..
+        conan info ..
 
     # - name: Create Build Environment
     #   # Some projects don't allow in-source building, so create a separate build directory
