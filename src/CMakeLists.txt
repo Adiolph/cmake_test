@@ -10,3 +10,5 @@ add_library(print SHARED
             ${CMAKE_CURRENT_SOURCE_DIR}/print/MyPrint.cpp)
 target_include_directories(print PUBLIC
                            ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(print PUBLIC
+                      CONAN_PKG::spdlog)

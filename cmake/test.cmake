@@ -30,7 +30,7 @@ function(ADD_TEST_UNIT)
   message(STATUS "name is: ${name}")
   message(STATUS "sources is: ${sources}")
   add_executable(${name} ${sources})
-  target_link_libraries(${name} CONAN_PKG::catch2 CONAN_PKG::spdlog)
+  target_link_libraries(${name} CONAN_PKG::catch2 CONAN_PKG::spdlog add)
   target_compile_options(${name} PRIVATE -g) # do not skip asserts
   target_include_directories(${name} PRIVATE "${CMAKE_SOURCE_DIR}/src")
   file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/test_outputs/)

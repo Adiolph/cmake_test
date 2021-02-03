@@ -40,7 +40,6 @@ jobs:
         cd ${{github.workspace}}
         mkdir build
         cd build
-        echo $PATH
         conan install ..
         conan info ..
 
