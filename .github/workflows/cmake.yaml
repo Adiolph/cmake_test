@@ -13,16 +13,16 @@ jobs:
     # cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-latest
-    container: conanio/gcc7:latest
+    # container: conanio/gcc7:latest
 
     steps:
     - uses: actions/checkout@v2
 
-    # - name: Download Conan
-    #   shell: bash
-    #   run: |
-    #     pip3 install wheel setuptools
-    #     pip3 install conan
+    - name: Download Conan
+      shell: bash
+      run: |
+        pip3 install wheel setuptools
+        pip3 install conan
 
     - name: Test conan environment
       shell: bash
