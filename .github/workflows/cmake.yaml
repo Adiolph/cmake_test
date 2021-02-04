@@ -1,0 +1,66 @@
+name: CMake
+
+on: [push]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  GENERATOR_NAME: "Unix Makefiles"
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-latest
+    # container: conanio/gcc7:latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download Conan
+      shell: bash
+      run: |
+        pip3 install wheel setuptools
+        pip3 install conan
+
+    - name: Setup Conan
+      # Set up conan with c++11 ABI support
+      shell: bash
+      # The echo "KEY=VAR" >> $GITHUB_ENV can setup global environment variable
+      run: |
+        export PATH=$HOME/.local/bin:$PATH
+        echo "PATH=$(echo $PATH)" >> $GITHUB_ENV
+        conan profile new default --detect
+        conan profile update settings.compiler.libcxx=libstdc++11 default
+
+    - name: Install Conan packages
+      # make build directory and run conan install
+      shell: bash
+      run: |
+        cd ${{github.workspace}}
+        mkdir build
+        cd build
+        conan install ..
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{github.workspace}}/build
+      # Note the current convention is to use the -S and -B options here to specify source 
+      # and build directories, but this is only available with CMake 3.13 and higher.  
+      # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
+      run: cmake $GITHUB_WORKSPACE -G "$GENERATOR_NAME" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute tests defined by the CMake configuration.  
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      run: ctest -C $BUILD_TYPE

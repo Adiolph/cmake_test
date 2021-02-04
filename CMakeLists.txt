@@ -4,10 +4,12 @@
 cmake_minimum_required(VERSION 3.18)
 project(MyProject VERSION 0.0)
 
+enable_testing()
+
 # CMAKE modules
 set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 include(conan)
-# include(test)
+include(test)
 
 # download and build all dependencies
 conan_cmake_run(CONANFILE conanfile.txt

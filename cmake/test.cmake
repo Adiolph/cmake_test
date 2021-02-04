@@ -14,9 +14,9 @@
 # If 1) doesn't work, use the SOURCES keyword to explicitly
 # specify the sources.
 #
-# Example: ADD_TEST(testSomething
+# Example: ADD_TEST_UNIT(testSomething
 #              SOURCES source1.cc source2.cc someheader.h)
-function(FUNC_ADD_TEST)
+function(ADD_TEST_UNIT)
   cmake_parse_arguments(PARSE_ARGV 1 TESTS "" "SANITIZE" "SOURCES")
   set(name ${ARGV0})
 
@@ -30,7 +30,7 @@ function(FUNC_ADD_TEST)
   message(STATUS "name is: ${name}")
   message(STATUS "sources is: ${sources}")
   add_executable(${name} ${sources})
-  target_link_libraries(${name} CONAN_PKG::catch2 CONAN_PKG::spdlog)
+  target_link_libraries(${name} CONAN_PKG::catch2 CONAN_PKG::spdlog add)
   target_compile_options(${name} PRIVATE -g) # do not skip asserts
   target_include_directories(${name} PRIVATE "${CMAKE_SOURCE_DIR}/src")
   file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/test_outputs/)
