@@ -1,7 +1,10 @@
 message(STATUS "I am in 'test' directory")
 
 ADD_TEST_UNIT(TestAdd 
-              SOURCES TestAdd.cpp TestString.cpp TestMain.cpp)
+              SOURCES TestAdd.cpp TestMain.cpp)
+
+ADD_TEST_UNIT(TestString 
+              SOURCES TestString.cpp TestMain.cpp)
 
 # set(name TestAdd)
 # add_executable(${name} TestMain.cpp TestAdd.cpp)
