@@ -7,7 +7,7 @@ TEST_CASE("String", "[String]")
     {
         std::string a, b;
         a = "ABC";
-        b = "ABC"
+        b = "ABC";
         REQUIRE(a == b);
     }
 }
